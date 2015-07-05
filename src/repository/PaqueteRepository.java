@@ -19,9 +19,10 @@ public class PaqueteRepository extends Archivo<Paquete> implements IBase<Paquete
 	public ArrayList<Paquete> ListadoBase() {
 		try {
 			ArrayList<Paquete> listado = new ArrayList<Paquete>();
-			String query = "SELECT ID, NOMBRE, PRECIO, CANT_PERSONAS, ID_VUELO FROM PAQUETE";
+			String query = "SELECT ID, NOMBRE, PRECIO, CANT_PERSONAS, DESCRIPCION, DESDE, HACIA FROM PAQUETE";
 			ResultSet rs = Base.ExecuteQuery(query);
 			vueloRepository = new VueloRepository();
+			DestinoRepositoty repository = new DestinoRepositoty();
 			while (rs.next()) {
 				Paquete paquete  = new Paquete();
 				
@@ -29,7 +30,9 @@ public class PaqueteRepository extends Archivo<Paquete> implements IBase<Paquete
 				paquete.setNombre(rs.getString("NOMBRE"));
 				paquete.setPrecio(rs.getFloat("PRECIO"));
 				paquete.setCantidadPersonas(rs.getInt("CANT_PERSONAS"));
-				paquete.setVuelo(vueloRepository.GetByIdBase(rs.getInt("ID_VUELO")));
+				paquete.setDescripcion(rs.getString("DESCRIPCION"));
+				paquete.setHacia(repository.GetByIdBase(rs.getInt("HACIA")));
+				paquete.setDesde(repository.GetByIdBase(rs.getInt("DESDE")));
 				
 				listado.add(paquete);
 				
@@ -46,17 +49,20 @@ public class PaqueteRepository extends Archivo<Paquete> implements IBase<Paquete
 	@Override
 	public Paquete GetByIdBase(Integer id) {
 		try {
-			String query = "SELECT ID, NOMBRE, PRECIO, CANT_PERSONAS, ID_VUELO FROM PAQUETE WHERE ID="+id;
+			String query = "SELECT ID, NOMBRE, PRECIO, CANT_PERSONAS, DESCRIPCION,DESDE,HACIA FROM PAQUETE WHERE ID="+id;
 			Paquete paquete  = new Paquete();
 			vueloRepository = new VueloRepository();
 			ResultSet rs = Base.ExecuteQuery(query);
+			DestinoRepositoty repository = new DestinoRepositoty();
 			
 			if (rs.next()) {
 				paquete.setId(rs.getInt("ID"));
 				paquete.setNombre(rs.getString("NOMBRE"));
 				paquete.setPrecio(rs.getFloat("PRECIO"));
 				paquete.setCantidadPersonas(rs.getInt("CANT_PERSONAS"));
-				paquete.setVuelo(vueloRepository.GetByIdBase(rs.getInt("ID_VUELO")));
+				paquete.setDescripcion(rs.getString("DESCRIPCION"));
+				paquete.setHacia(repository.GetByIdBase(rs.getInt("HACIA")));
+				paquete.setDesde(repository.GetByIdBase(rs.getInt("DESDE")));
 			}
 			return paquete;
 			
@@ -69,8 +75,8 @@ public class PaqueteRepository extends Archivo<Paquete> implements IBase<Paquete
 	@Override
 	public Boolean InsertarBase(Paquete t) {
 		try {
-			String parametros = t.getId()+",'" + t.getNombre() + "', " + t.getPrecio()+", "+t.getCantidadPersonas()+", "+t.getVuelo().getId();
-			String script = "INSERT INTO AVION (ID,NOMBRE,PRECIO,CANT_PERSONAS,ID_VUELO) VALUES("+parametros+")";
+			String parametros = t.getId()+",'"+ t.getNombre() + "', " + t.getPrecio()+", "+t.getCantidadPersonas()+", '"+t.getDescripcion()+"',"+t.getDesde().getId()+","+t.getHacia().getId();
+			String script = "INSERT INTO PAQUETE(ID,NOMBRE,PRECIO,CANT_PERSONAS,DESCRIPCION,DESDE,HACIA) VALUES("+parametros+")";
 			return Base.ExecuteScript(script);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -81,7 +87,7 @@ public class PaqueteRepository extends Archivo<Paquete> implements IBase<Paquete
 	@Override
 	public Boolean ModificarBase(Paquete t) {
 		try {
-			String script = "UPDATE AVION SET NOMBRE='"+t.getNombre()+"',PRECIO="+t.getPrecio()+",CANT_PERSONAS="+t.getCantidadPersonas()+",ID_VUELO="+t.getVuelo().getId()+" WHERE ID="+t.getId();
+			String script = "UPDATE AVION SET NOMBRE='"+t.getNombre()+"',PRECIO="+t.getPrecio()+",CANT_PERSONAS="+t.getCantidadPersonas()+",DESCRIPCION='"+t.getDescripcion()+"',DESDE="+t.getDesde().getId()+","+t.getHacia().getId()+" WHERE ID="+t.getId();
 			return Base.ExecuteScript(script);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -34,6 +34,7 @@ public class VueloRepository extends Archivo<Vuelo> implements IBase<Vuelo> {
 				vuelo.setAvion(repository.GetByIdBase(rs.getInt("ID_AVION")));
 				vuelo.setDesde(rs.getString("DESDE"));
 				vuelo.setHacia(rs.getString("HACIA"));
+				vuelo.setHacia(rs.getString("DESCRIPCION"));
 				
 				listado.add(vuelo);
 			}
@@ -62,6 +63,7 @@ public class VueloRepository extends Archivo<Vuelo> implements IBase<Vuelo> {
 				vuelo.setAvion(repository.GetByIdBase(rs.getInt("ID_AVION")));
 				vuelo.setDesde(rs.getString("DESDE"));
 				vuelo.setHacia(rs.getString("HACIA"));
+				vuelo.setHacia(rs.getString("DESCRIPCION"));
 			}
 			
 			return vuelo;
@@ -76,8 +78,8 @@ public class VueloRepository extends Archivo<Vuelo> implements IBase<Vuelo> {
 		try {
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd");
 			String parametros = t.getId()+", '"+sdf.format(t.getLlegada())+"', '"+sdf.format(t.getPartida())+"', "+t.getAvion().getId()+",'"+
-			t.getDesde()+"','"+t.getHacia()+"'";
-			String script = "INSERT INTO VUELO(ID,HORARIO_LLEGADA,HORARIO_PARTIDA,ID_AVION,DESDE,HACIA) VALUES("+parametros+")";
+			t.getDesde()+"','"+t.getHacia()+"',"+t.getPrecio();
+			String script = "INSERT INTO VUELO(ID,HORARIO_LLEGADA,HORARIO_PARTIDA,ID_AVION,DESDE,HACIA,PRECIO) VALUES("+parametros+")";
 			return Base.ExecuteScript(script);
 		} catch (Exception e) {
 			e.printStackTrace();

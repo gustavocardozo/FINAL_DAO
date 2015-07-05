@@ -8,9 +8,30 @@ public class Paquete implements Serializable {
 	protected Integer id;
 	protected String nombre;
 	protected float precio;
-	protected Vuelo vuelo;
 	protected Integer cantidadPersonas;
+	protected String descripcion;
+	protected Destino desde;
+	protected Destino hacia;
 	
+
+	public Destino getDesde() {
+		return desde;
+	}
+	public void setDesde(Destino desde) {
+		this.desde = desde;
+	}
+	public Destino getHacia() {
+		return hacia;
+	}
+	public void setHacia(Destino hasta) {
+		this.hacia = hasta;
+	}
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 	public Integer getCantidadPersonas() {
 		return cantidadPersonas;
 	}
@@ -35,10 +56,5 @@ public class Paquete implements Serializable {
 	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
-	public Vuelo getVuelo() {
-		return vuelo;
-	}
-	public void setVuelo(Vuelo vuelo) {
-		this.vuelo = vuelo;
-	}	
+
 }

@@ -15,7 +15,14 @@ public class Vuelo implements Serializable{
 	protected String hacia;
 	protected Date partida;
 	protected Date llegada;
+	protected float precio;
 	
+	public float getPrecio() {
+		return precio;
+	}
+	public void setPrecio(float precio) {
+		this.precio = precio;
+	}
 	public String getDesde() {
 		return desde;
 	}

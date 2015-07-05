@@ -74,8 +74,14 @@ public class Base {
 //	}
     public static Boolean ExecuteScript(String script)
 	{
+    	Connection conn=null;
+		Statement st;
+		
 		try {
-			Statement st = (Statement) db.conn.createStatement();
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = (Connection) DriverManager.getConnection(host + dbName,
+					user, pass);
+			st = (Statement) conn.createStatement();
 
 			if(st.executeUpdate(script) >0)
 			{
@@ -130,10 +136,16 @@ public class Base {
 //	}
     public static ResultSet ExecuteQuery(String script)
 	{
+    	Connection conn=null;
+		Statement st;
+		ResultSet rs;
 		try {			
-
-			Statement st = (Statement) db.conn.createStatement();
-			ResultSet rs = st.executeQuery(script);
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = (Connection) DriverManager.getConnection(host + dbName,
+					user, pass);
+			st = (Statement) conn.createStatement();
+			rs = st.executeQuery(script);
+			
 			return rs;
 		} catch (Exception e) {
 			e.printStackTrace();
