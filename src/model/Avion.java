@@ -29,7 +29,9 @@ public class Avion implements Serializable {
 	public void setCapacidad(Integer capacidad) {
 		this.capacidad = capacidad;
 	}
-	
+	public String toString() {
+		return this.nombre+";"+this.id;
+	}
 
 
 }

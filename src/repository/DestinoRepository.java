@@ -7,9 +7,9 @@ import model.*;
 import core.Base;
 import core.IBase;
 
-public class DestinoRepositoty extends Archivo<Destino> implements IBase<Destino>{
+public class DestinoRepository extends Archivo<Destino> implements IBase<Destino>{
 
-	public DestinoRepositoty() {
+	public DestinoRepository() {
 		super(Destino.class);
 		// TODO Auto-generated constructor stub
 	}

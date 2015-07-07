@@ -1,8 +1,8 @@
 package model;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Vuelo implements Serializable{
 	/**
@@ -11,8 +11,8 @@ public class Vuelo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	protected Integer id;
 	protected Avion avion;
-	protected String desde;
-	protected String hacia;
+	protected Destino desde;
+	protected Destino hacia;
 	protected Date partida;
 	protected Date llegada;
 	protected float precio;
@@ -23,16 +23,16 @@ public class Vuelo implements Serializable{
 	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
-	public String getDesde() {
+	public Destino getDesde() {
 		return desde;
 	}
-	public void setDesde(String desde) {
+	public void setDesde(Destino desde) {
 		this.desde = desde;
 	}
-	public String getHacia() {
+	public Destino getHacia() {
 		return hacia;
 	}
-	public void setHacia(String hacia) {
+	public void setHacia(Destino hacia) {
 		this.hacia = hacia;
 	}
 	public Integer getId() {
