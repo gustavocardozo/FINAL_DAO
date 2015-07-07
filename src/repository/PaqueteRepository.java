@@ -121,10 +121,6 @@ public class PaqueteRepository extends Archivo<Paquete> implements IBase<Paquete
 			return -1;
 		}
 	}
-<<<<<<< HEAD
-=======
-	
->>>>>>> origin/master
 	public ArrayList<Paquete> PaquetesBy(String where)
 	{
 		try {
@@ -133,11 +129,7 @@ public class PaqueteRepository extends Archivo<Paquete> implements IBase<Paquete
 			String query = "SELECT ID, NOMBRE, PRECIO, CANT_PERSONAS, DESCRIPCION, DESDE, HACIA FROM PAQUETE "+where;
 			ResultSet rs = Base.ExecuteQuery(query);
 			vueloRepository = new VueloRepository();
-<<<<<<< HEAD
 			DestinoRepository repository = new DestinoRepository();
-=======
-			DestinoRepositoty repository = new DestinoRepositoty();
->>>>>>> origin/master
 			while (rs.next()) {
 				Paquete paquete  = new Paquete();
 				
@@ -161,8 +153,4 @@ public class PaqueteRepository extends Archivo<Paquete> implements IBase<Paquete
 		}
 		
 	}
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 }
