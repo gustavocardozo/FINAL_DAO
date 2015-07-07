@@ -8,6 +8,14 @@ public class Reserva {
 	private int id;
 	private float total;
 	private Paquete paquete;
+	private Vuelo vuelo;
+	
+	public Vuelo getVuelo() {
+		return vuelo;
+	}
+	public void setVuelo(Vuelo vuelo) {
+		this.vuelo = vuelo;
+	}
 	private ArrayList<Cliente> clientes;
 	
 	public int getId() {

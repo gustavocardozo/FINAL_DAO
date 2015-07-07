@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de datos: `grupo_6_db`
+use grupo_6_db;
 --
 
 -- --------------------------------------------------------
@@ -98,8 +98,8 @@ CREATE TABLE IF NOT EXISTS `paquete` (
   `PRECIO` decimal(8,2) NOT NULL,
   `CANT_PERSONAS` int(11) NOT NULL,
   `DESCRIPCION` varchar(100) DEFAULT NULL,
-  `DESDE` varchar(50) NOT NULL COMMENT 'v',
-  `HACIA` varchar(50) NOT NULL
+  `DESDE` int(11) NOT NULL REFERENCES destinos(ID),
+  `HACIA` int(11) NOT NULL REFERENCES destinos(ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -140,8 +140,8 @@ CREATE TABLE IF NOT EXISTS `reserva_cliente` (
 CREATE TABLE IF NOT EXISTS `vuelo` (
   `ID` int(11) NOT NULL,
   `ID_AVION` int(11) DEFAULT NULL,
-  `DESDE` varchar(30) NOT NULL,
-  `HACIA` varchar(30) NOT NULL,
+  `DESDE` int(11) NOT NULL REFERENCES destinos(ID),
+  `HACIA` int(11) NOT NULL REFERENCES destinos(ID),
   `HORARIO_PARTIDA` date DEFAULT NULL,
   `HORARIO_LLEGADA` date DEFAULT NULL,
   `PRECIO` decimal(10,0) NOT NULL

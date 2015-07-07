@@ -156,7 +156,7 @@ public class VueloRepository extends Archivo<Vuelo> implements IBase<Vuelo> {
 				vuelo.setDesde(repoDestino.GetByIdBase(Integer.parseInt(rs.getString("DESDE"))));
 				vuelo.setHacia(repoDestino.GetByIdBase(Integer.parseInt(rs.getString("HACIA"))));
 				vuelo.setPrecio(rs.getFloat("PRECIO"));
-
+				vuelo.setDisponibilidad(GetDisponibilidad(vuelo));
 				
 				listado.add(vuelo);
 			}
@@ -164,6 +164,26 @@ public class VueloRepository extends Archivo<Vuelo> implements IBase<Vuelo> {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ArrayList<Vuelo>();
+		}
+	}
+	
+	public Integer GetDisponibilidad(Vuelo vuelo)
+	{
+		try {
+			String query = "SELECT A.CAPACIDAD - COUNT(*) AS CAPACIDAD FROM VUELO V INNER JOIN RESERVA R ON R.ID_VUELO = V.ID INNER JOIN AVION A ON A.ID=V.ID_AVION WHERE V.ID="+ vuelo.getId();
+			ResultSet rs  = Base.ExecuteQuery(query);
+			
+			if(rs.next())
+			{
+				return rs.getInt("CAPACIDAD");
+			}
+			else
+			{
+				return 0;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
 		}
 	}
 }
