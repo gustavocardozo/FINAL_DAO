@@ -117,8 +117,7 @@ INSERT INTO `paquete` (`ID`, `NOMBRE`, `PRECIO`, `CANT_PERSONAS`, `DESCRIPCION`,
 
 CREATE TABLE IF NOT EXISTS `reserva` (
   `ID` int(11) NOT NULL,
-  `ID_PAQUETE` int(11) NOT NULL,
-  `ID_VUELO` int(11) NOT NULL,
+  `ID_PAQUETE` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

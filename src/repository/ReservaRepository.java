@@ -87,8 +87,8 @@ public class ReservaRepository extends Archivo<Reserva> implements
 		Boolean inserto=false;
 		try {
 			
-			String parametros = t.getId()+", "+t.getPaquete().getId() + ", "+t.getVuelo().getId();
-			String script = "INSERT INTO RESERVA(ID,ID_PAQUETE,ID_VUELO) VALUES("+parametros+")";
+			String parametros = t.getId()+", "+t.getPaquete().getId();
+			String script = "INSERT INTO RESERVA(ID,ID_PAQUETE) VALUES("+parametros+")";
 			
 			if(Base.ExecuteScript(script))
 			{

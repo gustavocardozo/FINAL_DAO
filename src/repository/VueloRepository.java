@@ -36,7 +36,6 @@ public class VueloRepository extends Archivo<Vuelo> implements IBase<Vuelo> {
 				vuelo.setDesde(repoDestino.GetByIdBase(Integer.parseInt(rs.getString("DESDE"))));
 				vuelo.setHacia(repoDestino.GetByIdBase(Integer.parseInt(rs.getString("HACIA"))));
 				vuelo.setPrecio(rs.getFloat("PRECIO"));
-				vuelo.setDisponibilidad(GetDisponibilidad(vuelo));
 				
 				listado.add(vuelo);
 			}
@@ -66,7 +65,6 @@ public class VueloRepository extends Archivo<Vuelo> implements IBase<Vuelo> {
 				vuelo.setDesde(repoDestino.GetByIdBase(Integer.parseInt(rs.getString("DESDE"))));
 				vuelo.setHacia(repoDestino.GetByIdBase(Integer.parseInt(rs.getString("HACIA"))));
 				vuelo.setPrecio(rs.getFloat("PRECIO"));
-				vuelo.setDisponibilidad(GetDisponibilidad(vuelo));
 			}
 			
 			return vuelo;
