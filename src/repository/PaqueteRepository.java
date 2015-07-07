@@ -121,5 +121,38 @@ public class PaqueteRepository extends Archivo<Paquete> implements IBase<Paquete
 			return -1;
 		}
 	}
+	
+	public ArrayList<Paquete> PaquetesBy(String where)
+	{
+		try {
+			
+			ArrayList<Paquete> listado = new ArrayList<Paquete>();
+			String query = "SELECT ID, NOMBRE, PRECIO, CANT_PERSONAS, DESCRIPCION, DESDE, HACIA FROM PAQUETE "+where;
+			ResultSet rs = Base.ExecuteQuery(query);
+			vueloRepository = new VueloRepository();
+			DestinoRepositoty repository = new DestinoRepositoty();
+			while (rs.next()) {
+				Paquete paquete  = new Paquete();
+				
+				paquete.setId(rs.getInt("ID"));
+				paquete.setNombre(rs.getString("NOMBRE"));
+				paquete.setPrecio(rs.getFloat("PRECIO"));
+				paquete.setCantidadPersonas(rs.getInt("CANT_PERSONAS"));
+				paquete.setDescripcion(rs.getString("DESCRIPCION"));
+				paquete.setHacia(repository.GetByIdBase(rs.getInt("HACIA")));
+				paquete.setDesde(repository.GetByIdBase(rs.getInt("DESDE")));
+				
+				listado.add(paquete);
+				
+			}
+			
+			return listado;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList<Paquete>();
+		}
+		
+	}
 
 }

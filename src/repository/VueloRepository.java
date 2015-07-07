@@ -133,5 +133,34 @@ public class VueloRepository extends Archivo<Vuelo> implements IBase<Vuelo> {
 			return -1;
 		}
 	}
+	
+	public ArrayList<Vuelo> VuelosBy(String where)
+	{
+		try {
+			ArrayList<Vuelo> listado = new ArrayList<Vuelo>();
+			String query = "SELECT * FROM VUELO "+ where;
+			ResultSet rs  = Base.ExecuteQuery(query);
+			AvionRepository repository = new AvionRepository();
+			
+			while (rs.next()) {
+				
+				Vuelo vuelo = new Vuelo();
+				
+				vuelo.setId(rs.getInt("ID"));
+				vuelo.setLlegada(rs.getDate("HORARIO_LLEGADA"));
+				vuelo.setPartida(rs.getDate("HORARIO_PARTIDA"));
+				vuelo.setAvion(repository.GetByIdBase(rs.getInt("ID_AVION")));
+				vuelo.setDesde(rs.getString("DESDE"));
+				vuelo.setHacia(rs.getString("HACIA"));
+				vuelo.setHacia(rs.getString("DESCRIPCION"));
+				
+				listado.add(vuelo);
+			}
+			return listado;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList<Vuelo>();
+		}
+	}
 
 }
