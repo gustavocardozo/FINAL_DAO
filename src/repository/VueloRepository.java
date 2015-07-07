@@ -121,7 +121,7 @@ public class VueloRepository extends Archivo<Vuelo> implements IBase<Vuelo> {
 	@Override
 	public Integer GetIdBase() {
 		try {
-			String query = "SELECT MAX(ID) AS ID FROM VUELO";
+			String query = "SELECT MAX(ID)+1 AS ID FROM VUELO";
 			ResultSet rs = Base.ExecuteQuery(query);
 			
 			if(rs.next())
