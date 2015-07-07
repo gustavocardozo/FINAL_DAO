@@ -135,6 +135,10 @@ public class VueloRepository extends Archivo<Vuelo> implements IBase<Vuelo> {
 			return -1;
 		}
 	}
+<<<<<<< HEAD
+=======
+	
+>>>>>>> origin/master
 	public ArrayList<Vuelo> VuelosBy(String where)
 	{
 		try {
@@ -142,7 +146,10 @@ public class VueloRepository extends Archivo<Vuelo> implements IBase<Vuelo> {
 			String query = "SELECT * FROM VUELO "+ where;
 			ResultSet rs  = Base.ExecuteQuery(query);
 			AvionRepository repository = new AvionRepository();
+<<<<<<< HEAD
 			DestinoRepository repoDestino = new DestinoRepository();
+=======
+>>>>>>> origin/master
 			
 			while (rs.next()) {
 				
@@ -152,9 +159,15 @@ public class VueloRepository extends Archivo<Vuelo> implements IBase<Vuelo> {
 				vuelo.setLlegada(rs.getDate("HORARIO_LLEGADA"));
 				vuelo.setPartida(rs.getDate("HORARIO_PARTIDA"));
 				vuelo.setAvion(repository.GetByIdBase(rs.getInt("ID_AVION")));
+<<<<<<< HEAD
 				vuelo.setDesde(repoDestino.GetByIdBase(Integer.parseInt(rs.getString("DESDE"))));
 				vuelo.setHacia(repoDestino.GetByIdBase(Integer.parseInt(rs.getString("HACIA"))));
 				vuelo.setPrecio(rs.getFloat("PRECIO"));
+=======
+				vuelo.setDesde(rs.getString("DESDE"));
+				vuelo.setHacia(rs.getString("HACIA"));
+				vuelo.setHacia(rs.getString("DESCRIPCION"));
+>>>>>>> origin/master
 				
 				listado.add(vuelo);
 			}
@@ -164,4 +177,8 @@ public class VueloRepository extends Archivo<Vuelo> implements IBase<Vuelo> {
 			return new ArrayList<Vuelo>();
 		}
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 }
