@@ -21,11 +21,11 @@ public class ReservaRepository extends Archivo<Reserva> implements
 	public ArrayList<Reserva> ListadoBase() {
 		try {
 			ArrayList<Reserva> listado = new ArrayList<Reserva>();
-			String queryReserva = "SELECT ID, ID_PAQUETE FROM RESERVA";
+			String queryReserva = "SELECT ID, ID_VUELO, ID_PAQUETE FROM RESERVA";
 			ResultSet rsReserva = Base.ExecuteQuery(queryReserva);
 			PaqueteRepository paqueteRepository = new PaqueteRepository();
 			ClienteRepository clienteRepository = new ClienteRepository();
-			
+			VueloRepository vueloRepository = new VueloRepository();
 			while (rsReserva.next()) {
 				Reserva reserva = new Reserva();
 				
@@ -39,7 +39,8 @@ public class ReservaRepository extends Archivo<Reserva> implements
 				}
 				reserva.setClientes(clientes);
 				reserva.setPaquete(paqueteRepository.GetByIdBase(rsReserva.getInt("ID_PAQUETE")));
-				reserva.setTotal(reserva.getPaquete().getPrecio() * reserva.getClientes().size());
+				reserva.setVuelo(vueloRepository.GetByIdBase(rsReserva.getInt("ID_VUELO")));
+				reserva.setTotal(reserva.getPaquete().getPrecio() * reserva.getClientes().size() + reserva.getClientes().size()*reserva.getVuelo().getPrecio());
 				listado.add(reserva);
 			}
 			
@@ -54,11 +55,11 @@ public class ReservaRepository extends Archivo<Reserva> implements
 	@Override
 	public Reserva GetByIdBase(Integer id) {
 		try {
-			String queryReserva = "SELECT ID, ID_PAQUETE FROM RESERVA WHERE ID="+id;
+			String queryReserva = "SELECT ID, ID_VUELO, ID_PAQUETE FROM RESERVA WHERE ID="+id;
 			ResultSet rsReserva = Base.ExecuteQuery(queryReserva);
 			PaqueteRepository paqueteRepository = new PaqueteRepository();
 			ClienteRepository clienteRepository = new ClienteRepository();
-			
+			VueloRepository vueloRepository = new VueloRepository();
 			Reserva reserva = new Reserva();
 			if(rsReserva.next()) {
 				String queryClientes = "SELECT ID_CLIENTE FROM RESERVA_CLIENTE WHERE ID_RESERVA="
@@ -70,8 +71,9 @@ public class ReservaRepository extends Archivo<Reserva> implements
 					clientes.add(clienteRepository.GetByIdBase(rsClientes.getInt("ID_CLIENTE")));
 				}
 				reserva.setClientes(clientes);
+				reserva.setVuelo(vueloRepository.GetByIdBase(rsReserva.getInt("ID_VUELO")));
 				reserva.setPaquete(paqueteRepository.GetByIdBase(rsReserva.getInt("ID_PAQUETE")));
-				reserva.setTotal(reserva.getPaquete().getPrecio() * reserva.getClientes().size());
+				reserva.setTotal(reserva.getPaquete().getPrecio() * reserva.getClientes().size() + reserva.getClientes().size()*reserva.getVuelo().getPrecio());
 			}
 			
 			return reserva;
@@ -87,8 +89,8 @@ public class ReservaRepository extends Archivo<Reserva> implements
 		Boolean inserto=false;
 		try {
 			
-			String parametros = t.getId()+", "+t.getPaquete().getId();
-			String script = "INSERT INTO RESERVA(ID,ID_PAQUETE) VALUES("+parametros+")";
+			String parametros = t.getId()+", "+t.getVuelo().getId() + ", "+ ((t.getPaquete().getId()==0)?"null":t.getPaquete().getId());
+			String script = "INSERT INTO RESERVA(ID,ID_VUELO,ID_PAQUETE) VALUES("+parametros+")";
 			
 			if(Base.ExecuteScript(script))
 			{
