@@ -2,10 +2,10 @@
 -- version 4.3.11
 -- http://www.phpmyadmin.net
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 06-07-2015 a las 01:20:31
--- Versión del servidor: 5.6.24
--- Versión de PHP: 5.6.8
+-- Host: 127.0.0.1
+-- Generation Time: Jul 13, 2015 at 01:42 AM
+-- Server version: 5.6.24
+-- PHP Version: 5.6.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
-use grupo_6_db;
+-- Database: `grupo_6_db`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `avion`
+-- Table structure for table `avion`
 --
 
 CREATE TABLE IF NOT EXISTS `avion` (
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `avion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `avion`
+-- Dumping data for table `avion`
 --
 
 INSERT INTO `avion` (`ID`, `NOMBRE`, `CAPACIDAD`) VALUES
@@ -44,7 +44,7 @@ INSERT INTO `avion` (`ID`, `NOMBRE`, `CAPACIDAD`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `cliente`
+-- Table structure for table `cliente`
 --
 
 CREATE TABLE IF NOT EXISTS `cliente` (
@@ -59,17 +59,22 @@ CREATE TABLE IF NOT EXISTS `cliente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `cliente`
+-- Dumping data for table `cliente`
 --
 
 INSERT INTO `cliente` (`ID`, `DIRECCION`, `EMAIL`, `TELEFONO`, `DNI`, `NOMBRE`, `APELLIDO`, `FECHA_NACIMIENTO`) VALUES
 (1, 'Calle falsa 123', 'admin@admin.com.ar', '11111111111', '11111111', 'Guillermo', 'Telijo', '1994-04-11'),
-(2, 'Av Siempre Viva', 'root@admin.com.ar', '2222222222', '22222222', 'Esteban', 'Quito', '1994-10-18');
+(2, 'Av Siempre Viva', 'root@admin.com.ar', '2222222222', '22222222', 'Esteban', 'Quito', '1994-10-18'),
+(3, 'Einstein 65', 'gonzalo.miguel93@gmail.com', '1160534525', '37863377', 'Facundo Gonzalo', 'Miguel', '2015-07-01'),
+(4, 'Eintein 65', 'julian@gmail.com', '1112223355', '39283955', 'Julian', 'Miguel', '1995-10-01'),
+(5, 'Eintein 65', 'julian@gmail.com', '1112223355', '39283955', 'Julian', 'Miguel', '1995-10-01'),
+(6, 'Eintein 65', 'julian@gmail.com', '1112223355', '39283955', 'Julian', 'Miguel', '1995-10-01'),
+(7, 'Eintein 65', 'julian@gmail.com', '1112223355', '39283955', 'Julian', 'Miguel', '1995-10-01');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `destinos`
+-- Table structure for table `destinos`
 --
 
 CREATE TABLE IF NOT EXISTS `destinos` (
@@ -79,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `destinos` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `destinos`
+-- Dumping data for table `destinos`
 --
 
 INSERT INTO `destinos` (`ID`, `NOMBRE`, `DESCRIPCION`) VALUES
@@ -89,7 +94,7 @@ INSERT INTO `destinos` (`ID`, `NOMBRE`, `DESCRIPCION`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `paquete`
+-- Table structure for table `paquete`
 --
 
 CREATE TABLE IF NOT EXISTS `paquete` (
@@ -98,33 +103,48 @@ CREATE TABLE IF NOT EXISTS `paquete` (
   `PRECIO` decimal(8,2) NOT NULL,
   `CANT_PERSONAS` int(11) NOT NULL,
   `DESCRIPCION` varchar(100) DEFAULT NULL,
-  `DESDE` int(11) NOT NULL REFERENCES destinos(ID),
-  `HACIA` int(11) NOT NULL REFERENCES destinos(ID)
+  `DESDE` int(11) NOT NULL,
+  `HACIA` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `paquete`
+-- Dumping data for table `paquete`
 --
 
 INSERT INTO `paquete` (`ID`, `NOMBRE`, `PRECIO`, `CANT_PERSONAS`, `DESCRIPCION`, `DESDE`, `HACIA`) VALUES
-(1, 'America BS as Chile', '888.00', 1, 'null', '1', '2');
+(1, 'America BS as Chile', '888.00', 1, 'null', 1, 2);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `reserva`
+-- Table structure for table `reserva`
 --
 
 CREATE TABLE IF NOT EXISTS `reserva` (
   `ID` int(11) NOT NULL,
-  `ID_PAQUETE` int(11) NOT NULL REFERENCES paquete(ID),
-  `ID_VUELO` int(11) NOT NULL REFERENCES vuelo(ID)
+  `ID_PAQUETE` int(11) DEFAULT NULL,
+  `ID_VUELO` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `reserva`
+--
+
+INSERT INTO `reserva` (`ID`, `ID_PAQUETE`, `ID_VUELO`) VALUES
+(0, NULL, 1),
+(1, 1, 1),
+(2, 1, 1),
+(3, NULL, 1),
+(4, 1, 1),
+(5, NULL, 1),
+(6, 1, 1),
+(7, 1, 1),
+(8, NULL, 1);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `reserva_cliente`
+-- Table structure for table `reserva_cliente`
 --
 
 CREATE TABLE IF NOT EXISTS `reserva_cliente` (
@@ -132,74 +152,103 @@ CREATE TABLE IF NOT EXISTS `reserva_cliente` (
   `ID_RESERVA` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `reserva_cliente`
+--
+
+INSERT INTO `reserva_cliente` (`ID_CLIENTE`, `ID_RESERVA`) VALUES
+(1, 2),
+(1, 7),
+(1, 8),
+(2, 0),
+(2, 1),
+(2, 2),
+(2, 3),
+(2, 5),
+(2, 6),
+(2, 7),
+(2, 8),
+(3, 8),
+(4, 8),
+(5, 8),
+(6, 8),
+(7, 8);
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `vuelo`
+-- Table structure for table `vuelo`
 --
 
 CREATE TABLE IF NOT EXISTS `vuelo` (
   `ID` int(11) NOT NULL,
   `ID_AVION` int(11) DEFAULT NULL,
-  `DESDE` int(11) NOT NULL REFERENCES destinos(ID),
-  `HACIA` int(11) NOT NULL REFERENCES destinos(ID),
+  `DESDE` int(11) NOT NULL,
+  `HACIA` int(11) NOT NULL,
   `HORARIO_PARTIDA` date DEFAULT NULL,
   `HORARIO_LLEGADA` date DEFAULT NULL,
   `PRECIO` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Índices para tablas volcadas
+-- Dumping data for table `vuelo`
+--
+
+INSERT INTO `vuelo` (`ID`, `ID_AVION`, `DESDE`, `HACIA`, `HORARIO_PARTIDA`, `HORARIO_LLEGADA`, `PRECIO`) VALUES
+(1, 1, 1, 2, '2015-07-07', '2015-07-07', '888');
+
+--
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `avion`
+-- Indexes for table `avion`
 --
 ALTER TABLE `avion`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indices de la tabla `cliente`
+-- Indexes for table `cliente`
 --
 ALTER TABLE `cliente`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indices de la tabla `destinos`
+-- Indexes for table `destinos`
 --
 ALTER TABLE `destinos`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indices de la tabla `paquete`
+-- Indexes for table `paquete`
 --
 ALTER TABLE `paquete`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indices de la tabla `reserva`
+-- Indexes for table `reserva`
 --
 ALTER TABLE `reserva`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indices de la tabla `reserva_cliente`
+-- Indexes for table `reserva_cliente`
 --
 ALTER TABLE `reserva_cliente`
   ADD PRIMARY KEY (`ID_CLIENTE`,`ID_RESERVA`);
 
 --
--- Indices de la tabla `vuelo`
+-- Indexes for table `vuelo`
 --
 ALTER TABLE `vuelo`
   ADD PRIMARY KEY (`ID`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `destinos`
+-- AUTO_INCREMENT for table `destinos`
 --
 ALTER TABLE `destinos`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
