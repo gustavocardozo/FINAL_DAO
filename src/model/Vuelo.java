@@ -19,49 +19,49 @@ public class Vuelo implements Serializable{
 	protected Integer disponibilidad;
 	
 	public Integer getDisponibilidad() {
-		return disponibilidad;
+		return this.disponibilidad;
 	}
 	public void setDisponibilidad(Integer disponibilidad) {
 		this.disponibilidad = disponibilidad;
 	}
 	public float getPrecio() {
-		return precio;
+		return this.precio;
 	}
 	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
 	public Destino getDesde() {
-		return desde;
+		return this.desde;
 	}
 	public void setDesde(Destino desde) {
 		this.desde = desde;
 	}
 	public Destino getHacia() {
-		return hacia;
+		return this.hacia;
 	}
 	public void setHacia(Destino hacia) {
 		this.hacia = hacia;
 	}
 	public Integer getId() {
-		return id;
+		return this.id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
 	public Avion getAvion() {
-		return avion;
+		return this.avion;
 	}
 	public void setAvion(Avion avion) {
 		this.avion = avion;
 	}
 	public Date getPartida() {
-		return partida;
+		return this.partida;
 	}
 	public void setPartida(Date partida) {
 		this.partida = partida;
 	}
 	public Date getLlegada() {
-		return llegada;
+		return this.llegada;
 	}
 	public void setLlegada(Date llegada) {
 		this.llegada = llegada;

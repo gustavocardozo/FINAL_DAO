@@ -11,7 +11,7 @@ public class Reserva {
 	private Vuelo vuelo;
 	
 	public Vuelo getVuelo() {
-		return vuelo;
+		return this.vuelo;
 	}
 	public void setVuelo(Vuelo vuelo) {
 		this.vuelo = vuelo;
@@ -19,27 +19,27 @@ public class Reserva {
 	private ArrayList<Cliente> clientes;
 	
 	public int getId() {
-		return id;
+		return this.id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
 	public float getTotal() {
-		return total;
+		return this.total;
 	}
 	public void setTotal(float total) {
 		this.total = total;
 	}
 	public Paquete getPaquete() {
-		return paquete;
+		return this.paquete;
 	}
 	public void setPaquete(Paquete paquete) {
 		this.paquete = paquete;
 	}
 	public ArrayList<Cliente> getClientes() {
-		return clientes;
+		return this.clientes;
 	}
 	public void setClientes(ArrayList<Cliente> clientes) {
 		this.clientes = clientes;
-	}	
+	}
 }
