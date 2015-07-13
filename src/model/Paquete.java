@@ -13,7 +13,19 @@ public class Paquete implements Serializable {
 	protected Destino desde;
 	protected Destino hacia;
 	
-
+	public Paquete()
+	{
+		setId(0);
+		setNombre("");
+		setCantidadPersonas(0);
+		setDescripcion("");
+		setDesde(new Destino());
+		setHacia(new Destino());
+		setPrecio(0);
+		
+	}
+	
+	
 	public Destino getDesde() {
 		return desde;
 	}
