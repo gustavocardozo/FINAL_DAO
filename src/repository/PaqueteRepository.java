@@ -2,6 +2,8 @@ package repository;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import model.Paquete;
 import core.IBase;
@@ -153,4 +155,37 @@ public class PaqueteRepository extends Archivo<Paquete> implements IBase<Paquete
 		}
 		
 	}
+	
+	public List<Paquete> listaParaMigrar() {
+		List<Paquete> archivo = null;
+		List<Paquete> base = null;
+		try{
+			archivo = ListadoArchivo();
+			base = ListadoBase();
+			
+			
+			//archivo.removeAll(base);
+			
+			Iterator<Paquete> itArchivo = archivo.iterator();
+			Iterator<Paquete> itBase = base.iterator();
+			while(itArchivo.hasNext()){
+				Paquete paqueteArchivo = (Paquete)itArchivo.next();
+				while(itBase.hasNext()){
+					Paquete paqueteBase = (Paquete)itBase.next();
+					if(paqueteArchivo.getId() == paqueteBase.getId())
+					{
+						itArchivo.remove();
+						break;
+					}
+				}
+			}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}finally{
+			return archivo;
+		}
+		
+	}
+
 }

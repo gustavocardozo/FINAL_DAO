@@ -3,7 +3,7 @@ package repository;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
+import java.util.Locale;
 
 import model.Vuelo;
 import core.IBase;
@@ -19,6 +19,8 @@ public class VueloRepository extends Archivo<Vuelo> implements IBase<Vuelo> {
 	@Override
 	public ArrayList<Vuelo> ListadoBase() {
 		try {
+			SimpleDateFormat sdfPartida=new SimpleDateFormat("yyyy-MM-dd HH:mm",Locale.getDefault());
+			SimpleDateFormat sdfLlegada=new SimpleDateFormat("yyyy-MM-dd HH:mm",Locale.getDefault());
 			ArrayList<Vuelo> listado = new ArrayList<Vuelo>();
 			String query = "SELECT * FROM VUELO";
 			ResultSet rs  = Base.ExecuteQuery(query);
@@ -30,8 +32,8 @@ public class VueloRepository extends Archivo<Vuelo> implements IBase<Vuelo> {
 				Vuelo vuelo = new Vuelo();
 				
 				vuelo.setId(rs.getInt("ID"));
-				vuelo.setLlegada(rs.getDate("HORARIO_LLEGADA"));
-				vuelo.setPartida(rs.getDate("HORARIO_PARTIDA"));
+				vuelo.setLlegada(sdfLlegada.parse((rs.getString("HORARIO_LLEGADA"))));
+				vuelo.setPartida(sdfPartida.parse((rs.getString("HORARIO_PARTIDA"))));
 				vuelo.setAvion(repository.GetByIdBase(rs.getInt("ID_AVION")));
 				vuelo.setDesde(repoDestino.GetByIdBase(Integer.parseInt(rs.getString("DESDE"))));
 				vuelo.setHacia(repoDestino.GetByIdBase(Integer.parseInt(rs.getString("HACIA"))));
@@ -52,6 +54,8 @@ public class VueloRepository extends Archivo<Vuelo> implements IBase<Vuelo> {
 	public Vuelo GetByIdBase(Integer id) {
 		try {
 
+			SimpleDateFormat sdfPartida=new SimpleDateFormat("yyyy-MM-dd HH:mm",Locale.getDefault());
+			SimpleDateFormat sdfLlegada=new SimpleDateFormat("yyyy-MM-dd HH:mm",Locale.getDefault());
 			String query = "SELECT * FROM VUELO WHERE ID="+id;
 			ResultSet rs  = Base.ExecuteQuery(query);
 			AvionRepository repository = new AvionRepository();
@@ -60,8 +64,8 @@ public class VueloRepository extends Archivo<Vuelo> implements IBase<Vuelo> {
 			if(rs.next())
 			{
 				vuelo.setId(rs.getInt("ID"));
-				vuelo.setLlegada(rs.getDate("HORARIO_LLEGADA"));
-				vuelo.setPartida(rs.getDate("HORARIO_PARTIDA"));
+				vuelo.setLlegada(sdfLlegada.parse((rs.getString("HORARIO_LLEGADA"))));
+				vuelo.setPartida(sdfPartida.parse((rs.getString("HORARIO_PARTIDA"))));
 				vuelo.setAvion(repository.GetByIdBase(rs.getInt("ID_AVION")));
 				vuelo.setDesde(repoDestino.GetByIdBase(Integer.parseInt(rs.getString("DESDE"))));
 				vuelo.setHacia(repoDestino.GetByIdBase(Integer.parseInt(rs.getString("HACIA"))));
@@ -140,6 +144,8 @@ public class VueloRepository extends Archivo<Vuelo> implements IBase<Vuelo> {
 	public ArrayList<Vuelo> VuelosBy(String where)
 	{
 		try {
+			SimpleDateFormat sdfPartida=new SimpleDateFormat("yyyy-MM-dd HH:mm",Locale.getDefault());
+			SimpleDateFormat sdfLlegada=new SimpleDateFormat("yyyy-MM-dd HH:mm",Locale.getDefault());
 			ArrayList<Vuelo> listado = new ArrayList<Vuelo>();
 			String query = "SELECT * FROM VUELO "+ where;
 			ResultSet rs  = Base.ExecuteQuery(query);
@@ -152,8 +158,8 @@ public class VueloRepository extends Archivo<Vuelo> implements IBase<Vuelo> {
 				Vuelo vuelo = new Vuelo();
 				
 				vuelo.setId(rs.getInt("ID"));
-				vuelo.setLlegada(rs.getDate("HORARIO_LLEGADA"));
-				vuelo.setPartida(rs.getDate("HORARIO_PARTIDA"));
+				vuelo.setLlegada(sdfLlegada.parse((rs.getString("HORARIO_LLEGADA"))));
+				vuelo.setPartida(sdfPartida.parse((rs.getString("HORARIO_PARTIDA"))));
 				vuelo.setAvion(repository.GetByIdBase(rs.getInt("ID_AVION")));
 				vuelo.setDesde(repoDestino.GetByIdBase(Integer.parseInt(rs.getString("DESDE"))));
 				vuelo.setHacia(repoDestino.GetByIdBase(Integer.parseInt(rs.getString("HACIA"))));

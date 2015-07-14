@@ -37,6 +37,7 @@ public class ReservaRepository extends Archivo<Reserva> implements
 				while (rsClientes.next()) {
 					clientes.add(clienteRepository.GetByIdBase(rsClientes.getInt("ID_CLIENTE")));
 				}
+				reserva.setId(rsReserva.getInt("ID"));
 				reserva.setClientes(clientes);
 				reserva.setPaquete(paqueteRepository.GetByIdBase(rsReserva.getInt("ID_PAQUETE")));
 				reserva.setVuelo(vueloRepository.GetByIdBase(rsReserva.getInt("ID_VUELO")));
@@ -70,6 +71,7 @@ public class ReservaRepository extends Archivo<Reserva> implements
 				while (rsClientes.next()) {
 					clientes.add(clienteRepository.GetByIdBase(rsClientes.getInt("ID_CLIENTE")));
 				}
+				reserva.setId(rsReserva.getInt("ID"));
 				reserva.setClientes(clientes);
 				reserva.setVuelo(vueloRepository.GetByIdBase(rsReserva.getInt("ID_VUELO")));
 				reserva.setPaquete(paqueteRepository.GetByIdBase(rsReserva.getInt("ID_PAQUETE")));
@@ -114,9 +116,9 @@ public class ReservaRepository extends Archivo<Reserva> implements
 	public Boolean ModificarBase(Reserva t) {
 		try {
 			
-			if(this.DeleteArchivo(t))
+			if(this.DeleteBase(t))
 			{
-				if(this.InsertarArchivo(t))
+				if(this.InsertarBase(t))
 				{
 					return true;
 				}
@@ -133,22 +135,8 @@ public class ReservaRepository extends Archivo<Reserva> implements
 	@Override
 	public Boolean DeleteBase(Reserva t) {
 		try {
-			
-			String scriptTablasIntermedias="DELETE PAQUETE_CLIENTE WHERE ID_PAQUETE="+t.getPaquete().getId()+"AND ID_CLIENTE IN(";
-			String scriptReserva = "DELETE RESERVA WHERE ID="+t.getId();
-			
-			ArrayList<Cliente> clientes= t.getClientes();
-			Iterator<Cliente> it = clientes.iterator();
-			while(it.hasNext()){
-				Cliente cliente = (Cliente)it.next();
-				scriptTablasIntermedias = scriptTablasIntermedias + cliente.getId();
-				if(it.hasNext())
-				{
-					scriptTablasIntermedias=scriptTablasIntermedias+", ";
-				}
-			}
-			scriptTablasIntermedias = scriptTablasIntermedias + ");";
-			return Base.ExecuteScript(scriptTablasIntermedias+scriptReserva);
+			String scriptReserva = "DELETE RC, R FROM reserva_cliente rc INNER JOIN reserva r on r.ID = rc.ID_RESERVA WHERE r.ID="+t.getId();
+			return Base.ExecuteScript(scriptReserva);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

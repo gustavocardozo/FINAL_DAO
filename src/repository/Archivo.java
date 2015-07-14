@@ -117,8 +117,7 @@ public class Archivo<T> implements IArchivo<T> {
 			if (archivo.exists() == true) {
 				// en el constructor del FileOutputStream le paso el parametro
 				// true, para que agregué objetos al final.
-				oos = new ObjectOutputStream((new FileOutputStream(
-						this.getPath(), true))) {
+				oos = new ObjectOutputStream((new FileOutputStream(this.getPath(), true))) {
 					// sobre-escribo el metodo que escribe el encabezado //del
 					// archivo si no es el primer registro, lo cual hace que
 					// pueda seguir //agregando objetos al final del archivo
@@ -132,8 +131,7 @@ public class Archivo<T> implements IArchivo<T> {
 				return true;
 
 			} else { // si el archivo no existe
-				oos = new ObjectOutputStream((new FileOutputStream(
-						this.getPath())));
+				oos = new ObjectOutputStream((new FileOutputStream(this.getPath())));
 
 				oos.writeObject(t);
 				return true;
@@ -157,8 +155,7 @@ public class Archivo<T> implements IArchivo<T> {
 
 		try {
 
-			T obj = this.GetByIdArchivo((Integer) t.getClass()
-					.getMethod("getId").invoke(t));
+			T obj = this.GetByIdArchivo((Integer) t.getClass().getMethod("getId").invoke(t));
 
 			if (this.DeleteArchivo(obj)) {
 				if (this.InsertarArchivo(t)) {
@@ -188,8 +185,7 @@ public class Archivo<T> implements IArchivo<T> {
 
 				T obj = it.next();
 
-				double objid = (Integer) obj.getClass().getMethod("getId")
-						.invoke(obj);
+				double objid = (Integer) obj.getClass().getMethod("getId").invoke(obj);
 				double tid = (Integer) t.getClass().getMethod("getId").invoke(t);
 
 				if (objid == tid) {
@@ -216,37 +212,34 @@ public class Archivo<T> implements IArchivo<T> {
 		try {
 
 			File f = new File(this.getPath());
-			if(f.exists())
-			{
-			FileInputStream fis = new FileInputStream(f);
-			ois = new ObjectInputStream(fis);
-			while (true) {
-				T objeto = (T) ois.readObject();
-				Method getId = objeto.getClass().getMethod("getId");
-				Integer id = (Integer) getId.invoke(objeto);
-				if (id > max) {
-					max = id;
+			if (f.exists()) {
+				FileInputStream fis = new FileInputStream(f);
+				ois = new ObjectInputStream(fis);
+				while (true) {
+					T objeto = (T) ois.readObject();
+					Method getId = objeto.getClass().getMethod("getId");
+					Integer id = (Integer) getId.invoke(objeto);
+					if (id > max) {
+						max = id;
+					}
 				}
+			} else {
+				max = 0;
 			}
-			}
-			else
-			{
-				max=1;
-			}
-			
-			return max;
+
+			return max+1;
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			return max;
+			return max+1;
 
 		} finally {
 			try {
 				ois.close();
-			} catch (IOException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return max;
+				return max+1;
 			}
 		}
 	}

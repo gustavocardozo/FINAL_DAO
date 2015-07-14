@@ -22,7 +22,6 @@ public class Paquete implements Serializable {
 		setDesde(new Destino());
 		setHacia(new Destino());
 		setPrecio(0);
-		
 	}
 	
 	
