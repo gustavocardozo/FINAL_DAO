@@ -8,86 +8,79 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
 public class Base {
-	
-	
+
 	public Connection conn;
-    private Statement statement;
-    public static Base db;
-    
-    static String user = "root";
+	private Statement statement;
+	public static Base db;
+
+	static String user = "root";
 	static String pass = "";
 	static String host = "jdbc:mysql://localhost:3306/";
 	static String dbName = "grupo_6_db";
-    static String driver = "com.mysql.jdbc.Driver";
-    
-    private Base() {
-        try {
-            Class.forName(driver).newInstance();
-            this.conn = (Connection)DriverManager.getConnection(host+dbName,user,pass);
-        }
-        catch (Exception sqle) {
-            sqle.printStackTrace();
-        }
-    }
+	static String driver = "com.mysql.jdbc.Driver";
 
-    public static synchronized Base getDbCon() {
-        if ( db == null ) {
-            db = new Base();
-        }
-        return db;
- 
-    }
-    
-//	public static Boolean ExecuteScript(String script)
-//	{
-//		Connection conn=null;
-//		Statement st;
-//		
-//		try {
-//			Class.forName("com.mysql.jdbc.Driver");
-//			conn = (Connection) DriverManager.getConnection(host + dbName,
-//					user, pass);
-//			st = (Statement) conn.createStatement();
-//
-//			if(st.executeUpdate(script) >0)
-//			{
-//				return true;
-//			}
-//			else{
-//				return false;
-//			}
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return false;
-//		}
-////		finally
-////		{
-////			try {
-////				conn.close();
-////			} catch (SQLException e) {
-////				// TODO Auto-generated catch block
-////				e.printStackTrace();
-////			}
-////		}
-//		
-//	}
-    public static Boolean ExecuteScript(String script)
-	{
-    	Connection conn=null;
-		Statement st;
-		
+	private Base() {
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			conn = (Connection) DriverManager.getConnection(host + dbName,
-					user, pass);
-			st = (Statement) conn.createStatement();
+			Class.forName(driver).newInstance();
+			this.conn = (Connection) DriverManager.getConnection(host + dbName, user, pass);
+		} catch (Exception sqle) {
+			sqle.printStackTrace();
+		}
+	}
 
-			if(st.executeUpdate(script) >0)
-			{
+	public static synchronized Base getDbCon() {
+		if (db == null) {
+			db = new Base();
+		}
+		return db;
+
+	}
+
+	// public static Boolean ExecuteScript(String script)
+	// {
+	// Connection conn=null;
+	// Statement st;
+	//
+	// try {
+	// Class.forName("com.mysql.jdbc.Driver");
+	// conn = (Connection) DriverManager.getConnection(host + dbName,
+	// user, pass);
+	// st = (Statement) conn.createStatement();
+	//
+	// if(st.executeUpdate(script) >0)
+	// {
+	// return true;
+	// }
+	// else{
+	// return false;
+	// }
+	//
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// return false;
+	// }
+	//// finally
+	//// {
+	//// try {
+	//// conn.close();
+	//// } catch (SQLException e) {
+	//// // TODO Auto-generated catch block
+	//// e.printStackTrace();
+	//// }
+	//// }
+	//
+	// }
+	public static Boolean ExecuteScript(String script) {
+		Statement st;
+		Connection connection;
+		try {
+
+			connection = (Connection) Base.getDbCon().conn;
+			st = (Statement) connection.createStatement();
+
+			if (st.executeUpdate(script) > 0) {
 				return true;
-			}
-			else{
+			} else {
 				return false;
 			}
 
@@ -95,70 +88,68 @@ public class Base {
 			e.printStackTrace();
 			return false;
 		}
-//		finally
-//		{
-//			try {
-//				conn.close();
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-		
+		// finally
+		// {
+		// try {
+		// conn.close();
+		// } catch (SQLException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// }
+
 	}
-	
-//	public static ResultSet ExecuteQuery(String script)
-//	{
-//		Connection conn=null;
-//		Statement st;
-//		ResultSet rs;
-//		try {			
-//			Class.forName("com.mysql.jdbc.Driver");
-//			conn = (Connection) DriverManager.getConnection(host + dbName,
-//					user, pass);
-//			st = (Statement) conn.createStatement();
-//			rs = st.executeQuery(script);
-//			
-//			return rs;
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return null;
-//		}
-////		finally
-////		{
-////			try {
-////				conn.close();
-////			} catch (SQLException e) {
-////				// TODO Auto-generated catch block
-////				e.printStackTrace();
-////			}
-////		}
-//	}
-    public static ResultSet ExecuteQuery(String script)
-	{
-    	Connection conn=null;
+
+	// public static ResultSet ExecuteQuery(String script)
+	// {
+	// Connection conn=null;
+	// Statement st;
+	// ResultSet rs;
+	// try {
+	// Class.forName("com.mysql.jdbc.Driver");
+	// conn = (Connection) DriverManager.getConnection(host + dbName,
+	// user, pass);
+	// st = (Statement) conn.createStatement();
+	// rs = st.executeQuery(script);
+	//
+	// return rs;
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// return null;
+	// }
+	//// finally
+	//// {
+	//// try {
+	//// conn.close();
+	//// } catch (SQLException e) {
+	//// // TODO Auto-generated catch block
+	//// e.printStackTrace();
+	//// }
+	//// }
+	// }
+	public static ResultSet ExecuteQuery(String script) {
+		Connection connection;
 		Statement st;
 		ResultSet rs;
-		try {			
-			Class.forName("com.mysql.jdbc.Driver");
-			conn = (Connection) DriverManager.getConnection(host + dbName,
-					user, pass);
-			st = (Statement) conn.createStatement();
-			rs = st.executeQuery(script);
+		try {
 			
+			connection = Base.getDbCon().conn;
+			st = (Statement) connection.createStatement();
+			rs = st.executeQuery(script);
+
 			return rs;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
-//		finally
-//		{
-//			try {
-//				conn.close();
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
+		// finally
+		// {
+		// try {
+		// conn.close();
+		// } catch (SQLException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// }
 	}
 }
